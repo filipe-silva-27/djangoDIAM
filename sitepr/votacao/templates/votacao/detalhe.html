@@ -7,14 +7,14 @@
 <body>
 
 
-    <h1>{{ questao.questao_texto }}</h1>
-    <ul>
-    {% for opcao in questao.opcao_set.all %} <!--set.all está sem ()-->
-        <li>{{ opcao.opcao_texto }}</li>
-    {% endfor %}
-    </ul>
+<!--    <h1>{{ questao.questao_texto }}</h1>-->
+<!--    <ul>-->
+<!--    {% for opcao in questao.opcao_set.all %} &lt;!&ndash;set.all está sem ()&ndash;&gt;-->
+<!--        <li>{{ opcao.opcao_texto }}</li>-->
+<!--    {% endfor %}-->
+<!--    </ul>-->
 
-<!--
+
     <h1>{{ questao.questao_texto }}</h1>
 
 
@@ -22,9 +22,9 @@
         <p><strong>{{ error_message }}</strong></p>
     {% endif %}
 
-    <form action="{% url 'votacao:voto' questao.id %}" method="post">  vai mexer na view voto do file votacao
+    <form action="{% url 'votacao:voto' questao.id %}" method="post">  <!--vai mexer na view voto do file votacao-->
 
-        {% csrf_token %}     protecao de seguranca em logins (para um site malicioso n roubar info)
+        {% csrf_token %}    <!-- protecao de seguranca em logins (para um site malicioso n roubar info)-->
 
         {% for opcao in questao.opcao_set.all %}
 
@@ -37,9 +37,9 @@
 
         <input type="submit" value="Voto" />
 </form>
--->
 
-<a href="{% url 'votacao:detalhe' q.id %}"> {{q.questao_texto}}</a>
+
+<a href="{% url 'votacao:detalhe' questao.id %}"> {{q.questao_texto}}</a>
 
 
 </body>
