@@ -47,7 +47,7 @@ def index(request):
     latest_question_list = Questao.objects.all() #vai buscar todos os objetos
 
     #colocar dicionario com o conteudo a apresentar
-    return render(request, 'votacao/index.html', {'latest_question_list':latest_question_list,
+    return render(request, 'votacao/index.html', {'latest_question_list': latest_question_list,
                                                   'fruta': 'banana',
                                                   'dinheiro': 25})
 
@@ -85,3 +85,5 @@ def voto(request, questao_id):
  # repetidamente se o utilizador
  # voltar para a página web anterior.
     return HttpResponseRedirect(reverse('votacao:resultados', args=(questao.id,)))
+
+

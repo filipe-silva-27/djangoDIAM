@@ -1,6 +1,11 @@
 from django.urls import include, path
 from . import views
+
+
 # (. significa que importa views da mesma directoria)
+
+app_name = 'votacao' #necessario porque a tag {% url %} necessita
+
 urlpatterns = [
  path("", views.index, name="index"),
  path("<int:questao_id>", views.detalhe, name="detalhe"), #definir var inteira que aparece na path -> questao_id é o agumento usado na view detalhe
