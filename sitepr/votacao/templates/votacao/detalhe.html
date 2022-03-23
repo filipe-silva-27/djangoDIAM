@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+    <!--
+    <h1>{{ questao.questao_texto }}</h1>
+    <ul>
+    {% for opcao in questao.opcao_set.all %}
+        <li>{{ opcao.opcao_texto }}</li>
+    {% endfor %}
+    </ul>
+
+
+    <h1>{{ questao.questao_texto }}</h1>
+-->
+
+
+    {% if error_message %}
+        <p><strong>{{ error_message }}</strong></p>
+    {% endif %}
+
+    <form action="{% url 'votacao:voto' questao.id %}" method="post"> <!-- vai mexer na view voto do file votacao-->
+
+        {% csrf_token %}    <!-- protecao de seguranca em logins (para um site malicioso n roubar info)-->
+
+        {% for opcao in questao.opcao_set.all %}
+
+            <input type="radio" name="opcao" id="opcao{{ forloop.counter }}" value="{{ opcao.id }}" />
+            <label for="opcao{{ forloop.counter }}">
+                {{ opcao.opcao_texto }}
+            </label>
+            <br/>
+        {% endfor %}
+
+        <input type="submit" value="Voto" />
+</form>
+
+
+
+</body>
+</html>
