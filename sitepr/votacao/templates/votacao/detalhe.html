@@ -10,9 +10,7 @@
     <h1>{{ questao.questao_texto }}</h1>
     <ul>
     {% for opcao in questao.opcao_set.all %} <!--set.all está sem ()-->
-        <li>
-            <a href="{% url 'votacao:detalhe' q.id %}"> {{ opcao.opcao_texto }} </a>
-        </li>
+        <li>{{ opcao.opcao_texto }}</li>
     {% endfor %}
     </ul>
 
@@ -41,7 +39,7 @@
 </form>
 -->
 
-
+<a href="{% url 'votacao:detalhe' q.id %}"> {{q.questao_texto}}</a>
 
 
 </body>

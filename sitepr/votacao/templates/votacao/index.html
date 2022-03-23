@@ -12,7 +12,7 @@
         <ul>
         {% for questao in latest_question_list %}
             <li>
-                <a href="/votacao/{{ questao.id }}"> {{ questao.questao_texto }}</a>
+                <a href="{% url 'votacao:detalhe' questao.id %}"> {{q.questao_texto}}</a>
             </li>
         {% endfor %}
         </ul>
