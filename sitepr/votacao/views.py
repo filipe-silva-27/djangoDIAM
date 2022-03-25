@@ -95,3 +95,14 @@ def submeterQuestao(request):
     q=Questao(questao_texto = questao_texto, pub_data=timezone.now())
     q.save()
     return HttpResponseRedirect(reverse('votacao:index'))
+
+def formOpcao(request, questao_id):
+    return render(request, 'votacao/criaropcao.html', {'questao_id': questao_id})
+
+def submeterOpcao(request, questao_id):
+    questao = get_object_or_404(Questao, pk=questao_id)
+    nova_opcao = request.POST['novaOp']
+    o=Opcao(questao=questao, opcao_texto=nova_opcao)
+    o.save()
+    return HttpResponseRedirect(reverse('votacao:detalhe', args=(questao.id,)))
+
