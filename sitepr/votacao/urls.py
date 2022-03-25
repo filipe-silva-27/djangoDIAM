@@ -12,6 +12,7 @@ urlpatterns = [
                                                          #do file views.py. O URL vai ser do tipo 127.0.0.1:80/votacao/idquestao
  path("<str:texto_exemplo>/toto", views.texto_toto, name="texto_toto"),
  path("<int:questao_id>/voto", views.voto, name="voto"),
- path("<int:questao_id>/resultados", views.resultados, name="resultados")
-
+ path("<int:questao_id>/resultados", views.resultados, name="resultados"),
+ path("inserir_questao", views.formQuestao, name="formQuestao"),
+ path("submeter_Questao", views.submeterQuestao, name='submeterQuestao')
 ]

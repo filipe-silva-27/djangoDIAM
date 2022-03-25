@@ -3,6 +3,7 @@ from django.http import HttpResponse
 from .models import Questao, Opcao
 from django.urls import reverse
 from django.http import HttpResponseRedirect
+from django.utils import timezone
 
 #def index(request):
 #    return HttpResponse("Viva DIAM. Esta e a pagina de entrada da app votacao.")
@@ -48,8 +49,7 @@ def index(request):
 
     #colocar dicionario com o conteudo a apresentar
     return render(request, 'votacao/index.html', {'latest_question_list': latest_question_list,
-                                                  'fruta': 'banana',
-                                                  'dinheiro': 25})
+                                                  'fruta': 'banana'})
 
 
 
@@ -71,7 +71,7 @@ def resultados(request, questao_id):
 def voto(request, questao_id):
     questao = get_object_or_404(Questao, pk=questao_id)
     try:
-        opcao_seleccionada = questao.opcao_set.get(pk=request.POST['opcao'])
+        opcao_seleccionada = questao.opcao_set.get(pk=request.POST['opcao']) #vai buscar o input do html
 
     except (KeyError, Opcao.DoesNotExist):
         # Apresenta de novo o form para votar
@@ -79,11 +79,19 @@ def voto(request, questao_id):
     else:
         opcao_seleccionada.votos += 1
         opcao_seleccionada.save()
- # Retorne sempre HttpResponseRedirect depois de
- # tratar os dados POST de um form
- # pois isso impede os dados de serem tratados
- # repetidamente se o utilizador
- # voltar para a página web anterior.
+    # Retorne sempre HttpResponseRedirect depois de
+    # tratar os dados POST de um form
+    # pois isso impede os dados de serem tratados
+    # repetidamente se o utilizador
+    # voltar para a página web anterior.
     return HttpResponseRedirect(reverse('votacao:resultados', args=(questao.id,)))
 
+def formQuestao(request):
+    return render(request, 'votacao/criarquestao.html')
 
+def submeterQuestao(request):
+
+    questao_texto = request.POST['novaQ']
+    q=Questao(questao_texto = questao_texto, pub_data=timezone.now())
+    q.save()
+    return HttpResponseRedirect(reverse('votacao:index'))
