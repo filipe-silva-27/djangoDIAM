@@ -16,5 +16,6 @@ urlpatterns = [
  path("inserir_questao", views.formQuestao, name="formQuestao"),
  path("submeter_Questao", views.submeterQuestao, name='submeterQuestao'),
  path("<int:questao_id>/inserir_opcao", views.formOpcao, name="formOpcao"),
- path("<int:questao_id>/submeter_Opcao", views.submeterOpcao, name='submeterOpcao')
+ path("<int:questao_id>/submeter_Opcao", views.submeterOpcao, name='submeterOpcao'),
+ path("<int:questao_id>/apagarquestao", views.apagar_questoes, name="apagar_questoes")
 ]

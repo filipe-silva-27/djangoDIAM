@@ -91,7 +91,6 @@ def formQuestao(request):
     return render(request, 'votacao/criarquestao.html')
 
 def submeterQuestao(request):
-
     questao_texto = request.POST['novaQ']
     q=Questao(questao_texto = questao_texto, pub_data=timezone.now())
     q.save()
@@ -107,13 +106,20 @@ def submeterOpcao(request, questao_id):
     o.save()
     return HttpResponseRedirect(reverse('votacao:detalhe', args=(questao.id,)))
 
+def apagar_questoes(request, questao_id):
+    #if not request.user.is_superuser:
+       # return HttpResponseRedirect(reverse('votacao:index'))
+    #else:
+        questao = Questao.objects.get(pk=questao_id)
+        questao.delete()
+        questao.save()
+        return HttpResponseRedirect(reverse('votacao:index'))
 
 
 def login_view(request):
     username = request.POST['username']
     password = request.POST['password']
-    user = authenticate(username=username,
-                        password=password)
+    user = authenticate(username=username, password=password)
     if user is not None:
         login(request, user)
     # direccionar para página de sucesso
@@ -123,7 +129,5 @@ def login_view(request):
 
 
 
-def apagar_questoes(request):
-    if not request.user.is_superuser:
-        return HttpResponseRedirect(reverse('votacao:index'))
+
 

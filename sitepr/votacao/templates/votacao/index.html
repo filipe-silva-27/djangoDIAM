@@ -6,7 +6,7 @@
 </head>
 <body>
 
-    {%if request.user.is_authenticated and request.user.is_superuser%}
+<!--    if request.user.is_authenticated and request.user.is_superuser-->
 
     <!--{{variavel}} significa que vai substituir por um valor da variavel enviada pelo dicionario da view
     pagina 19-->
@@ -24,6 +24,7 @@
     {% endif %}
 
     <p> <a href="{% url 'votacao:formQuestao' %}"> Criar nova questão</a></p>
+
 
 
 <p> A fruta é {{fruta}}</p>

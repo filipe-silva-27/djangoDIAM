@@ -40,7 +40,8 @@
 
 
 <!--    <a href="{% url 'votacao:detalhe' questao.id %}"> {{q.questao_texto}}</a>-->
-    <a href="{% url 'votacao:formOpcao' questao.id %}"> Criar nova opcao</a>
+    <button><a href="{% url 'votacao:formOpcao' questao.id %}"> Criar nova opcao</a></button>
+    <button><a href="{% url 'votacao:apagar_questoes' questao.id %}"> Eliminar questão</a></button>
 
 </body>
 </html>
