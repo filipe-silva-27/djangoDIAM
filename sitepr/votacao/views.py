@@ -4,6 +4,7 @@ from .models import Questao, Opcao
 from django.urls import reverse
 from django.http import HttpResponseRedirect
 from django.utils import timezone
+from django.contrib.auth import authenticate, login
 
 #def index(request):
 #    return HttpResponse("Viva DIAM. Esta e a pagina de entrada da app votacao.")
@@ -105,4 +106,24 @@ def submeterOpcao(request, questao_id):
     o=Opcao(questao=questao, opcao_texto=nova_opcao)
     o.save()
     return HttpResponseRedirect(reverse('votacao:detalhe', args=(questao.id,)))
+
+
+
+def login_view(request):
+    username = request.POST['username']
+    password = request.POST['password']
+    user = authenticate(username=username,
+                        password=password)
+    if user is not None:
+        login(request, user)
+    # direccionar para página de sucesso
+
+    else:
+        return HttpResponse("Erro ao logar Utilizador")
+
+
+
+def apagar_questoes(request):
+    if not request.user.is_superuser:
+        return HttpResponseRedirect(reverse('votacao:index'))
 
