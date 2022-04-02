@@ -157,7 +157,9 @@ def register(request):
     curso = request.POST['curso']
 
     user = User.objects.create_user(username, email,password)
-    aluno = Aluno(user, curso)
+    aluno = Aluno(user=user, curso=curso)
+
+    aluno.save()
     return HttpResponseRedirect(reverse('votacao:index'))
 
 
