@@ -18,5 +18,4 @@ def criar_users():
         a = Aluno(user=u, curso='IGE')
         a.save()
 
-apagar_users()
 criar_users()

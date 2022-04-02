@@ -17,5 +17,13 @@ urlpatterns = [
  path("submeter_Questao", views.submeterQuestao, name='submeterQuestao'),
  path("<int:questao_id>/inserir_opcao", views.formOpcao, name="formOpcao"),
  path("<int:questao_id>/submeter_Opcao", views.submeterOpcao, name='submeterOpcao'),
- path("<int:questao_id>/apagarquestao", views.apagar_questoes, name="apagar_questoes")
+ path("<int:questao_id>/apagarquestao", views.apagar_questoes, name="apagar_questoes"),
+ path("<int:questao_id>/apagaropcao", views.apagar_opcoes, name="apagar_opcoes"),
+ path("login", views.login_view, name="login_view"),
+ path("dadosLogin", views.dadosLogin_view, name="dadosLogin_view"),
+ path("logoutview", views.logoutview, name="logoutview"),
+ path("registo", views.form_register, name="form_register"),
+ path("registerData", views.register, name="register"),
+ path("detalhes", views.mostra_detalhes, name="mostra_detalhes"),
+
 ]

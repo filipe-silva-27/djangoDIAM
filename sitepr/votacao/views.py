@@ -1,10 +1,11 @@
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse
-from .models import Questao, Opcao
+from .models import Questao, Opcao, Aluno
+from django.contrib.auth.models import User
 from django.urls import reverse
 from django.http import HttpResponseRedirect
 from django.utils import timezone
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 
 #def index(request):
 #    return HttpResponse("Viva DIAM. Esta e a pagina de entrada da app votacao.")
@@ -107,27 +108,56 @@ def submeterOpcao(request, questao_id):
     return HttpResponseRedirect(reverse('votacao:detalhe', args=(questao.id,)))
 
 def apagar_questoes(request, questao_id):
-    #if not request.user.is_superuser:
-       # return HttpResponseRedirect(reverse('votacao:index'))
-    #else:
+    if not request.user.is_superuser:
+       return HttpResponseRedirect(reverse('votacao:index'))
+    else:
         questao = Questao.objects.get(pk=questao_id)
         questao.delete()
-        questao.save()
         return HttpResponseRedirect(reverse('votacao:index'))
 
+def apagar_opcoes(request, questao_id):
+    if not request.user.is_superuser:
+       return HttpResponseRedirect(reverse('votacao:index'))
+    else:
+        if questao_id is not None:
+            opcao = Opcao.objects.get(questao_id=questao_id, pk=request.POST["opcao"])
+            opcao.delete()
+            return HttpResponseRedirect(reverse('votacao:detalhe', args=(questao_id,)))
+        else:
+            return HttpResponse("Nenhuma opcao foi selecionada")
 
 def login_view(request):
+    return render(request, 'votacao/login.html')
+
+def dadosLogin_view(request):
     username = request.POST['username']
     password = request.POST['password']
     user = authenticate(username=username, password=password)
     if user is not None:
         login(request, user)
-    # direccionar para página de sucesso
-
+        return HttpResponseRedirect(reverse('votacao:index'))
     else:
         return HttpResponse("Erro ao logar Utilizador")
 
+def logoutview(request):
+    if request.user.is_authenticated:
+        logout(request)
+        return HttpResponse("Logout do Utilizador feito ")
+    else:
+        return HttpResponse("Erro no Logout do Utilizador feito ")
 
+def form_register(request):
+    return render(request, "votacao/registar.html")
 
+def register(request):
+    username = request.POST['username']
+    password = request.POST['password']
+    email = request.POST['email']
+    curso = request.POST['curso']
 
+    user = User.objects.create_user(username, email,password)
+    aluno = Aluno(user, curso)
+    return HttpResponse("Registado")
 
+def mostra_detalhes(request):
+    return render(request, 'votacao/mostra_detalhes.html')

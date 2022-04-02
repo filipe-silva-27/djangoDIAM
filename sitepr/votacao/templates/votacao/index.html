@@ -6,10 +6,20 @@
 </head>
 <body>
 
-<!--    if request.user.is_authenticated and request.user.is_superuser-->
 
     <!--{{variavel}} significa que vai substituir por um valor da variavel enviada pelo dicionario da view
     pagina 19-->
+
+
+    {% if request.user.is_authenticated and request.user.is_superuser %}
+    <h1>Olá admin {{request.user.username}}</h1>
+    {% elif request.user.is_authenticated %}
+    <h1>Olá {{request.user.username}}</h1>
+    {% else %}
+    <h1>Bem vindo! Você não está logado</h1>
+    {% endif %}
+
+
     {% if latest_question_list %}  <!--#instrucao em python-->
         <ul>
         {% for questao in latest_question_list %}
@@ -23,10 +33,26 @@
         <p>Nao ha questoes disponiveis.</p>
     {% endif %}
 
-    <p> <a href="{% url 'votacao:formQuestao' %}"> Criar nova questão</a></p>
+    {%  if request.user.is_superuser %}
+    <p> <button> <a href="{% url 'votacao:formQuestao' %}"> Criar nova questão</a></button>  </p>
+    {% endif %}
+
+    <br>
+
+    {% if not request.user.is_authenticated %}
+    <p> <button> <a href="{% url 'votacao:login_view' %}"> Fazer login</a></button></p>
+    <br>
+    <p> <button> <a href="{% url 'votacao:form_register' %}"> Não tem conta? Registe-se!</a></button></p>
+    {% endif %}
 
 
 
-<p> A fruta é {{fruta}}</p>
+    {% if request.user.is_authenticated %}
+    <p> <button> <a href="{% url 'votacao:mostra_detalhes' %}"> Detalhes da conta</a></button></p>
+    <br>
+    <p> <button> <a href="{% url 'votacao:logoutview' %}"> Fazer logout</a></button></p>
+    {% endif %}
+
+
 </body>
 </html>

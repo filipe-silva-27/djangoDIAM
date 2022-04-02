@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Registo do Aluno</title>
+</head>
+<body>
+
+            <form id="reg-form" method="post" action="{% url 'votacao:register' %}">
+                {% csrf_token %}
+
+                        <label for="id_username">Username</label>
+                        <input id="id_username" name="username" type="text">
+
+                <br>
+
+                        <label for="mail">Email</label>
+                        <input id="mail" name="email" type="text">
+
+                <br>
+
+                        <label for="id_password">Password</label>
+                        <input id="id_password" name="password" type="password">
+
+                <br>
+
+                        <label for="course">Escolha um curso:</label>
+
+                        <select name="curso" id="course">
+                            <option value="IGE">IGE</option>
+                            <option value="EI">EI</option>
+                            <option value="ETI">ETI</option>
+                            <option value="igePL">IGE-PL</option>
+                        </select>
+
+                {%  if request.user.is_superuser %}
+                <br>
+                    <label for="id_admin">Password</label>
+                    <input id="id_admin" name="admin" type="boolean">
+                {% endif %}
+                <br>
+
+                <input type="submit" value="Register" />
+
+                <button><a href="{% url 'votacao:index' %}"> voltar</a></button>
+            </form>
+</body>
+</html>

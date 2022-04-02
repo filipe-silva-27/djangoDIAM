@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Detalhes de {{request.user.username}}</title>
+</head>
+<body>
+
+    <h1>Detalhes da conta de {{request.user.username}}</h1>
+    <p>username: {{request.user.username}}</p>
+    {%  if request.user.is_superuser %}
+    <p>password: {{request.user.password}}</p>
+    {% endif %}
+    <p>email: {{request.user.email}}</p>
+    <p>curso: {{request.user.aluno.curso}}</p>
+
+</body>
+</html>
