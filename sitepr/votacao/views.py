@@ -142,7 +142,8 @@ def dadosLogin_view(request):
 def logoutview(request):
     if request.user.is_authenticated:
         logout(request)
-        return HttpResponse("Logout do Utilizador feito ")
+        return HttpResponseRedirect(reverse('votacao:index'))
+
     else:
         return HttpResponse("Erro no Logout do Utilizador feito ")
 
@@ -157,7 +158,8 @@ def register(request):
 
     user = User.objects.create_user(username, email,password)
     aluno = Aluno(user, curso)
-    return HttpResponse("Registado")
+    return HttpResponseRedirect(reverse('votacao:index'))
+
 
 def mostra_detalhes(request):
     return render(request, 'votacao/mostra_detalhes.html')
