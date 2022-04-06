@@ -6,7 +6,10 @@
 </head>
 <body>
 
-
+<!-- nas vies usar um if POST para tratar os dados e fora do if faz o form -> ficamos com menos views e menos urls -->
+<!--    {% block nome %} sao as partes que diferem para os templates derivados-->
+<!--    no derivado pomos {% extends … %}  e {% block nome %} {% endblock %}
+um block conteudos e um block controlos-->
     <!--{{variavel}} significa que vai substituir por um valor da variavel enviada pelo dicionario da view
     pagina 19-->
 
@@ -19,6 +22,8 @@
     <h1>Bem vindo! Você não está logado</h1>
     {% endif %}
 
+
+    <h5>Admin para poupar o professor ao testar: Username é "zezinho" e password é 12345</h5>
 
     {% if latest_question_list %}  <!--#instrucao em python-->
         <ul>
