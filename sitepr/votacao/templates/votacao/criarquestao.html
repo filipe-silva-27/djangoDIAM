@@ -6,6 +6,9 @@
 </head>
 <body>
 
+{% extends "./index.html" %}
+
+{% block conteudo %}
 
     <h1>Introduza a nova questão:</h1>
     <form action="{% url 'votacao:submeterQuestao' %}" method="post">
@@ -15,6 +18,6 @@
         <input type="text" name="novaQ" id="novaQ" />
         <input type="submit"/>
     </form>
-
+{% endblock %}
 </body>
 </html>
