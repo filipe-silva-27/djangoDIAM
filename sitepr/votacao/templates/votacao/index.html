@@ -1,24 +1,86 @@
 <!DOCTYPE html>
+{% load static %}
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Página Inicial</title>
+    <link rel="stylesheet"  href="{%  static  'votacao/css/navbar.css'  %}">
+    <style>
+        /*body{*/
+        /*    background-image: url("../images/BGblue.jpg");*/
+        /*}*/
+         body{
+            background-image: url("../../static/votacao/images/BGblue.jp");
+             /*background: linear-gradient(to right bottom, cornflowerblue, purple);*/
+             /*background: linear-gradient(0.06deg, rgba(250, 250, 250, 1) 0%,rgba(246, 246, 246, 1) 29.62%,rgba(234, 234, 234, 1) 58.47%,rgba(215, 215, 215, 1) 86.92%,rgba(204, 204, 204, 1) 99.22%);*/
+             /*box-shadow:-4px 8px 8px rgba(0,0,0,0.1), -8px 16px 16px rgba(0,0,0,0.1), -16px 32px 32px rgba(0,0,0,0.15), -32px 64px 64px rgba(0,0,0,0.25);*/
+             background: linear-gradient(to right, #054f7d, #00a7cf, #d7ab14, #861a54, #054f7d);;
+             background-attachment: fixed;
+             color: white;
+             background-size: 600%;
+              background-position: 0 0;
+              /*display: flex;
+              font-family: 'Lato', Arial, sans-serif;
+              height: 100%;
+              justify-content: center;*/
+              /* Animation */
+              animation-duration: 20s;
+              animation-iteration-count: infinite;
+              animation-name: gradients;
+        }
+
+        @keyframes gradients {
+            0% { background-position: 0  0; }
+           25% { background-position:50% 0; }
+           50% { background-position:90% 0; }
+           60% { background-position:60%;   }
+           75% { background-position:40%;   }
+          100% { background-position: 0  0; }
+        }
+
+        .questao_group{
+            background: lightgrey;
+            margin-left: 20%;
+            margin-right: 20%;
+            text-align: center;
+            border-color: #1d2231;
+            border-radius: 10px;
+            box-shadow: 0px 0px 20px #3f323e;
+
+
+            min-height: 500px;
+        }
+
+        .questao {
+            /*background: linear-gradient(#563e78, #243b55);*/
+            /*margin:;*/
+            margin-top:auto;
+        }
+
+        .questao a{
+            color: white;
+        }
+
+    </style>
+
 </head>
 <body>
 
 
-    <div class="topnav">
-      <a href="{% url 'votacao:index' %}">Home</a>
+    <header class="topnav">
 
-      {% if not request.user.is_authenticated %}
-        <a href="{% url 'votacao:login_view' %}">Login</a>
-      {%else%}
-        <a href="{% url 'votacao:mostra_detalhes' %}"> Perfil</a>
+        <ul>
+          <li><a href="{% url 'votacao:index' %}">Home</a></li>
 
-        <a href="{% url 'votacao:logoutview' %}"> Logout</a>
-      {% endif %}
+          {% if not request.user.is_authenticated %}
+            <li><a href="{% url 'votacao:login_view' %}">Login</a></li>
+          {%else%}
+            <li><a href="{% url 'votacao:mostra_detalhes' %}"> Perfil</a></li>
 
-    </div>
+            <li><a href="{% url 'votacao:logoutview' %}"> Logout</a></li>
+          {% endif %}
+        </ul>
+    </header>
 
 
 {% block conteudo %}
@@ -32,11 +94,11 @@
 
 
     <h5>Admin para poupar o professor ao testar: Username é "zezinho" e password é 12345</h5>
-
+    <div class="questao_group">
     {% if latest_question_list %}  <!--#instrucao em python-->
-        <ul>
+        <ul >
         {% for questao in latest_question_list %}
-            <li>
+            <li class="questao">
                 <a href="{% url 'votacao:detalhe' questao.id %}"> {{questao.questao_texto}}</a>
             </li>
         {% endfor %}
@@ -49,21 +111,21 @@
     {%  if request.user.is_superuser %}
     <p> <button> <a href="{% url 'votacao:formQuestao' %}"> Criar nova questão</a></button>  </p>
     {% endif %}
-
+    </div>
     <br>
 {% endblock %}
 <!--    {% if not request.user.is_authenticated %}-->
-<!--    <p> <button> <a href="{% url 'votacao:login_view' %}"> Fazer login</a></button></p>-->
+<!--    <p> <button> <a href=" url 'votacao:login_view' %}"> Fazer login</a></button></p>-->
 <!--    <br>-->
-<!--    <p> <button> <a href="{% url 'votacao:form_register' %}"> Não tem conta? Registe-se!</a></button></p>-->
+<!--    <p> <button> <a href=" url 'votacao:form_register' %}"> Não tem conta? Registe-se!</a></button></p>-->
 <!--    {% endif %}-->
 
 
 
 <!--    {% if request.user.is_authenticated %}-->
-<!--    <p> <button> <a href="{% url 'votacao:mostra_detalhes' %}"> Detalhes da conta</a></button></p>-->
+<!--    <p> <button> <a href=" url 'votacao:mostra_detalhes' %}"> Detalhes da conta</a></button></p>-->
 <!--    <br>-->
-<!--    <p> <button> <a href="{% url 'votacao:logoutview' %}"> Fazer logout</a></button></p>-->
+<!--    <p> <button> <a href=" url 'votacao:logoutview' %}"> Fazer logout</a></button></p>-->
 <!--    {% endif %}-->
 
 
