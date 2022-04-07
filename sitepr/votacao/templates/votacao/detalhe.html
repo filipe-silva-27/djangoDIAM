@@ -1,10 +1,12 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
 <body>
+{% extends "./index.html" %}
 
 
 <!--    <h1>{{ questao.questao_texto }}</h1>-->
@@ -14,7 +16,7 @@
 <!--    {% endfor %}-->
 <!--    </ul>-->
 
-
+{% block conteudo %}
     <h1>{{ questao.questao_texto }}</h1>
 
 
@@ -59,6 +61,6 @@
 
     <br>
     <button><a href="{% url 'votacao:index' %}"> voltar</a></button>
-
+{% endblock %}
 </body>
 </html>

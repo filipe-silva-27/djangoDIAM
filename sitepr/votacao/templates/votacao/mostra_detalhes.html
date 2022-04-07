@@ -8,7 +8,9 @@
     <title>Dados Pessoais</title>
 </head>
 <body>
+{% extends "./index.html" %}
 
+{% block conteudo %}
 {% if request.user.is_authenticated %}
 <ul>
     <li>Nome:{{user.username}}</li>
@@ -19,7 +21,7 @@
 {% else %}
     <center><h1>APENAS PARA UTILIZADORES LOGADOS</h1></center>
 {% endif %}
-
+{% endblock %}
 
 </body>
 </html>

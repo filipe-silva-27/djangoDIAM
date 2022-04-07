@@ -5,7 +5,9 @@
     <title>Nova Opcao</title>
 </head>
 <body>
+{% extends "./index.html" %}
 
+{% block conteudo %}
     <h1>Introduza a nova opcao:</h1>
     <form action="{% url 'votacao:submeterOpcao' questao_id %}" method="post">
 
@@ -14,7 +16,7 @@
         <input type="text" name="novaOp" id="novaOp" />
         <input type="submit"/>
     </form>
-
+{% endblock %}
 
 </body>
 </html>

@@ -6,14 +6,22 @@
 </head>
 <body>
 
-<!-- nas views usar um if POST para tratar os dados e fora do if faz o form -> ficamos com menos views e menos urls -->
-<!--    {% block nome %} sao as partes que diferem para os templates derivados-->
-<!--    no derivado pomos {% extends … %}  e {% block nome %} {% endblock %}
-um block conteudos e um block controlos-->
-    <!--{{variavel}} significa que vai substituir por um valor da variavel enviada pelo dicionario da view
-    pagina 19-->
+
+    <div class="topnav">
+      <a href="{% url 'votacao:index' %}">Home</a>
+
+      {% if not request.user.is_authenticated %}
+        <a href="{% url 'votacao:login_view' %}">Login</a>
+      {%else%}
+        <a href="{% url 'votacao:mostra_detalhes' %}"> Perfil</a>
+
+        <a href="{% url 'votacao:logoutview' %}"> Logout</a>
+      {% endif %}
+
+    </div>
 
 
+{% block conteudo %}
     {% if request.user.is_authenticated and request.user.is_superuser %}
     <h1>Olá admin {{request.user.username}}</h1>
     {% elif request.user.is_authenticated %}
@@ -43,20 +51,20 @@ um block conteudos e um block controlos-->
     {% endif %}
 
     <br>
+{% endblock %}
+<!--    {% if not request.user.is_authenticated %}-->
+<!--    <p> <button> <a href="{% url 'votacao:login_view' %}"> Fazer login</a></button></p>-->
+<!--    <br>-->
+<!--    <p> <button> <a href="{% url 'votacao:form_register' %}"> Não tem conta? Registe-se!</a></button></p>-->
+<!--    {% endif %}-->
 
-    {% if not request.user.is_authenticated %}
-    <p> <button> <a href="{% url 'votacao:login_view' %}"> Fazer login</a></button></p>
-    <br>
-    <p> <button> <a href="{% url 'votacao:form_register' %}"> Não tem conta? Registe-se!</a></button></p>
-    {% endif %}
 
 
-
-    {% if request.user.is_authenticated %}
-    <p> <button> <a href="{% url 'votacao:mostra_detalhes' %}"> Detalhes da conta</a></button></p>
-    <br>
-    <p> <button> <a href="{% url 'votacao:logoutview' %}"> Fazer logout</a></button></p>
-    {% endif %}
+<!--    {% if request.user.is_authenticated %}-->
+<!--    <p> <button> <a href="{% url 'votacao:mostra_detalhes' %}"> Detalhes da conta</a></button></p>-->
+<!--    <br>-->
+<!--    <p> <button> <a href="{% url 'votacao:logoutview' %}"> Fazer logout</a></button></p>-->
+<!--    {% endif %}-->
 
 
 </body>

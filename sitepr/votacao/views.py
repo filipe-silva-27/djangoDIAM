@@ -147,21 +147,25 @@ def logoutview(request):
     else:
         return HttpResponse("Erro no Logout do Utilizador feito ")
 
-def form_register(request):
-    return render(request, "votacao/registar.html")
+# def form_register(request):
+#     return render(request, "votacao/registar.html")
 
 def register(request):
-    username = request.POST['username']
-    password = request.POST['password']
-    email = request.POST['email']
-    curso = request.POST['curso']
 
-    user = User.objects.create_user(username, email,password)
-    aluno = Aluno(user=user, curso=curso)
+    if request.method == 'POST':
+        username = request.POST['username']
+        password = request.POST['password']
+        email = request.POST['email']
+        curso = request.POST['curso']
 
-    aluno.save()
-    return HttpResponseRedirect(reverse('votacao:index'))
+        user = User.objects.create_user(username, email,password)
+        aluno = Aluno(user=user, curso=curso)
 
+        aluno.save()
+        return HttpResponseRedirect(reverse('votacao:index'))
+
+    else:
+        return render(request, "votacao/registar.html")
 
 def mostra_detalhes(request):
     return render(request, 'votacao/mostra_detalhes.html')
