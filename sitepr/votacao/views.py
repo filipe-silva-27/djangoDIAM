@@ -6,6 +6,7 @@ from django.urls import reverse
 from django.http import HttpResponseRedirect
 from django.utils import timezone
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 
 #def index(request):
 #    return HttpResponse("Viva DIAM. Esta e a pagina de entrada da app votacao.")
@@ -50,8 +51,7 @@ def index(request):
     latest_question_list = Questao.objects.all() #vai buscar todos os objetos
 
     #colocar dicionario com o conteudo a apresentar
-    return render(request, 'votacao/index.html', {'latest_question_list': latest_question_list,
-                                                  'fruta': 'banana'})
+    return render(request, 'votacao/index.html', {'latest_question_list': latest_question_list})
 
 
 
@@ -64,12 +64,14 @@ def detalhe(request, questao_id):
 def texto_toto(request, texto_exemplo):
     return HttpResponse(texto_exemplo)
 
+@login_required 
 def resultados(request, questao_id):
     questao = get_object_or_404(Questao, pk=questao_id)
     return render(request, 'votacao/resultados.html', {'questao': questao})
 
 
 #parte 6 do guiao
+@login_required
 def voto(request, questao_id):
     questao = get_object_or_404(Questao, pk=questao_id)
     try:
@@ -148,6 +150,7 @@ def dadosLogin_view(request):
  else:
    return render(request, 'votacao/login.html')
 
+@login_required
 def logoutview(request):
     if request.user.is_authenticated:
         logout(request)
@@ -176,5 +179,6 @@ def register(request):
     else:
         return render(request, "votacao/registar.html")
 
+@login_required
 def mostra_detalhes(request):
     return render(request, 'votacao/mostra_detalhes.html')
