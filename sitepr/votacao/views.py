@@ -88,24 +88,30 @@ def voto(request, questao_id):
     # voltar para a página web anterior.
     return HttpResponseRedirect(reverse('votacao:resultados', args=(questao.id,)))
 
-def formQuestao(request):
-    return render(request, 'votacao/criarquestao.html')
+#def formQuestao(request):
+#    return render(request, 'votacao/criarquestao.html')
 
 def submeterQuestao(request):
+ if request.method == 'POST':
     questao_texto = request.POST['novaQ']
     q=Questao(questao_texto = questao_texto, pub_data=timezone.now())
     q.save()
     return HttpResponseRedirect(reverse('votacao:index'))
+  else:
+   return render(request, 'votacao/criarquestao.html')
 
-def formOpcao(request, questao_id):
-    return render(request, 'votacao/criaropcao.html', {'questao_id': questao_id})
+#def formOpcao(request, questao_id):
+#    return render(request, 'votacao/criaropcao.html', {'questao_id': questao_id})
 
 def submeterOpcao(request, questao_id):
+ if request.method == 'POST':
     questao = get_object_or_404(Questao, pk=questao_id)
     nova_opcao = request.POST['novaOp']
     o=Opcao(questao=questao, opcao_texto=nova_opcao)
     o.save()
     return HttpResponseRedirect(reverse('votacao:detalhe', args=(questao.id,)))
+  else:
+   return render(request, 'votacao/criaropcao.html', {'questao_id': questao_id})
 
 def apagar_questoes(request, questao_id):
     if not request.user.is_superuser:
@@ -126,10 +132,11 @@ def apagar_opcoes(request, questao_id):
         else:
             return HttpResponse("Nenhuma opcao foi selecionada")
 
-def login_view(request):
-    return render(request, 'votacao/login.html')
+#def login_view(request):
+#    return render(request, 'votacao/login.html')
 
 def dadosLogin_view(request):
+ if request.method == 'POST':
     username = request.POST['username']
     password = request.POST['password']
     user = authenticate(username=username, password=password)
@@ -137,7 +144,9 @@ def dadosLogin_view(request):
         login(request, user)
         return HttpResponseRedirect(reverse('votacao:index'))
     else:
-        return HttpResponse("Erro ao logar Utilizador")
+        return HttpResponse("Erro ao logar Utilizador") 
+ else:
+   return render(request, 'votacao/login.html')
 
 def logoutview(request):
     if request.user.is_authenticated:
